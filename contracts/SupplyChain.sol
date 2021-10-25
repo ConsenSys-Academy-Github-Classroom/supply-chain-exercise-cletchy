@@ -3,36 +3,55 @@ pragma solidity >=0.5.16 <0.9.0;
 
 contract SupplyChain {
 
-  // <owner>
+  
+  address public owner;
 
-  // <skuCount>
-
+  uint  public skuCount;
   // <items mapping>
 
-  // <enum State: ForSale, Sold, Shipped, Received>
+  enum State {
+    ForSale, 
+    Sold, 
+    Shipped, 
+    Received
+  }
 
-  // <struct Item: name, sku, price, state, seller, and buyer>
+  State public state; 
+
+  struct Item {
+    string name;
+    uint sku;
+    uint price;
+    State state;
+    address payable seller;
+    address payable buyer;
+  }
   
   /* 
    * Events
    */
 
-  // <LogForSale event: sku arg>
+  // Event LogForSale(sku arg);
 
-  // <LogSold event: sku arg>
+  // Event LogSold(sku arg);
 
-  // <LogShipped event: sku arg>
+  // Event LogShipped(sku arg);
 
-  // <LogReceived event: sku arg>
+  // Event LogReceived(sku arg);
 
 
   /* 
    * Modifiers
    */
 
-  // Create a modifer, `isOwner` that checks if the msg.sender is the owner of the contract
-
   // <modifier: isOwner
+  modifier isOwner {
+    require(
+        owner == msg.sender
+        //"Only owners can call this function."
+    );
+    _;
+  }
 
   modifier verifyCaller (address _address) { 
     // require (msg.sender == _address); 
